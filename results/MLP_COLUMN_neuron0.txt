@@ -1,0 +1,30 @@
+# MLP column probe — eML structure recovery
+
+## Public reference MLP
+TinyPublicMLP hidden=4
+  W1 = [0.85, -1.2, 0.55, 1.4]
+  b1 = [0.1, -0.3, 0.25, -0.15]
+  W2 = [0.5, -0.8, 0.35, 0.65]
+  b2 = 0.05
+
+## Target: neuron_act i=0 tanh(0.8500*x + 0.1000)
+best_byte=6  in_rmse=7.432036e-01  n_eml=6
+node: byte=6 n_eml=6 x_slot=L x@leaf1 bind@leaf0
+
+## Recovered symbolic value (before numeric D bind)
+     D₆           
+───────────── - D₇
+   D₄             
+──────── - D₅     
+      D₂          
+-D₃ + ──          
+      D₁          
+
+## Top bytes by in_rmse
+| byte | n_eml | x_slot | bind | in_rmse |
+|------|-------|--------|------|---------|
+| 6 | 6 | L | 0 | 7.432036e-01 |
+| 9 | 1 | R | 0 | 8.531590e-01 |
+| 11 | 3 | R | 0 | 8.673911e-01 |
+| 12 | 4 | R | 0 | 9.961058e-01 |
+| 15 | 7 | R | 0 | 1.196277e+00 |

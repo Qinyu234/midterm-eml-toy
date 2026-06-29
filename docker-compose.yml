@@ -1,0 +1,38 @@
+services:
+  eml:
+    build: .
+    image: eml-bench:latest
+    working_dir: /app
+    environment:
+      PYTHONPATH: /app
+    volumes:
+      - ./results:/app/results
+    command: >
+      python scripts/run_score.py
+      --targets all
+      --max-steps 500
+      --eps 1e-2
+
+  test:
+    build: .
+    image: eml-bench:latest
+    working_dir: /app
+    environment:
+      PYTHONPATH: /app
+    command: python -m pytest tests/test_score_suite.py tests/test_logsum_gap.py -q
+
+  smoke:
+    build: .
+    image: eml-bench:latest
+    working_dir: /app
+    environment:
+      PYTHONPATH: /app
+    volumes:
+      - ./results:/app/results
+    command: >
+      python scripts/run_score.py
+      --targets sin
+      --max-steps 30
+      --eps 1e-1
+      --txt results/SCORE_smoke.txt
+      --json results/SCORE_smoke.json

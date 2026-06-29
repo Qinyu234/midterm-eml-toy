@@ -1,0 +1,28 @@
+# MLP column probe — eML structure recovery
+
+## Public reference MLP
+TinyPublicMLP hidden=4
+  W1 = [0.85, -1.2, 0.55, 1.4]
+  b1 = [0.1, -0.3, 0.25, -0.15]
+  W2 = [0.5, -0.8, 0.35, 0.65]
+  b2 = 0.05
+
+## Target: w1_col (input weights, H=4)
+best_byte=12  in_rmse=9.999775e-01  n_eml=4
+node: byte=12 n_eml=4 x_slot=R x@leaf1 bind@leaf0
+
+## Recovered symbolic value (before numeric D bind)
+        ⎛            D₃   ⎞
+        ⎜   D₄      ℯ     ⎟
+D₅ - log⎜- ℯ   + ─────────⎟
+        ⎜         D₁    D₂⎟
+        ⎝        ℯ   - ℯ  ⎠
+
+## Top bytes by in_rmse
+| byte | n_eml | x_slot | bind | in_rmse |
+|------|-------|--------|------|---------|
+| 12 | 4 | R | 0 | 9.999775e-01 |
+| 6 | 6 | L | 0 | 1.005886e+00 |
+| 3 | 3 | L | 0 | 1.114141e+00 |
+| 14 | 6 | R | 0 | 1.153118e+00 |
+| 1 | 1 | L | 0 | 1.231739e+00 |

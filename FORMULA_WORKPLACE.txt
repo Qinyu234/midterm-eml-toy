@@ -1,0 +1,283 @@
+# FORMULA_WORKPLACE: T value + Wirtinger D grad (∂z, ∂z̄ a+bi)
+# all leaf D_1..D_{n+1}; high→low chain rewrite on ∂z
+
+=== byte 1 n_eml=1 x_slot=0 ===
+
+value [before]:
+  -T(e, -1, T(e, 1, D_1)) + T(e, 1, T(e, -1, D_2))
+
+value [after]:
+  -D_1 + D_2
+
+D_gradient:
+  d/D_2/∂z = 1
+  d/D_2/∂z̄ = 0
+  d/D_1/∂z = -1
+  d/D_1/∂z̄ = 0
+
+=== byte 2 n_eml=2 x_slot=0 ===
+
+value [before]:
+  -T(e, -1, T(e, 1, D_3)) + T(e, 1, -T(e, -1, D_1) + T(e, 1, T(e, -2, D_2)))
+
+value [after]:
+  -D_3 + T(e, 1, -T(e, -1, D_1) + T(e, -1, D_2))
+
+D_gradient:
+  d/D_3/∂z = -1
+  d/D_3/∂z̄ = 0
+  d/D_2/∂z = -T(e, 1, -T(e, -1, D_1) + T(e, -1, D_2))/D_2 * d/D_3
+  d/D_2/∂z̄ = 0
+  d/D_1/∂z = -D_2/D_1 * d/D_2
+  d/D_1/∂z̄ = 0
+
+=== byte 3 n_eml=3 x_slot=0 ===
+
+value [before]:
+  -T(e, -1, -T(e, -1, T(e, 2, D_3)) + T(e, 1, -T(e, -1, T(e, 1, D_1)) + T(e, 1, T(e, -1, D_2)))) + T(e, 1, T(e, -1, D_4))
+
+value [after]:
+  D_4 - T(e, -1, -T(e, 1, D_3) + T(e, 1, -D_1 + D_2))
+
+D_gradient:
+  d/D_4/∂z = 1
+  d/D_4/∂z̄ = 0
+  d/D_3/∂z = T(e, 1, D_3)/(-T(e, 1, D_3) + T(e, 1, -D_1 + D_2))
+  d/D_3/∂z̄ = 0
+  d/D_2/∂z = -T(e, 1, -D_1 + D_2)/T(e, 1, D_3) * d/D_3
+  d/D_2/∂z̄ = 0
+  d/D_1/∂z = -d/D_2
+  d/D_1/∂z̄ = 0
+
+=== byte 4 n_eml=4 x_slot=0 ===
+
+value [before]:
+  -T(e, -1, T(e, 1, D_5)) + T(e, 1, -T(e, -1, -T(e, -1, T(e, 1, D_3)) + T(e, 1, -T(e, -1, D_1) + T(e, 1, T(e, -2, D_2)))) + T(e, 1, T(e, -2, D_4)))
+
+value [after]:
+  -D_5 + T(e, 1, T(e, -1, D_4) - T(e, -1, -D_3 + T(e, 1, -T(e, -1, D_1) + T(e, -1, D_2))))
+
+D_gradient:
+  d/D_5/∂z = -1
+  d/D_5/∂z̄ = 0
+  d/D_4/∂z = -T(e, 1, T(e, -1, D_4) - T(e, -1, -D_3 + T(e, 1, -T(e, -1, D_1) + T(e, -1, D_2))))/D_4 * d/D_5
+  d/D_4/∂z̄ = 0
+  d/D_3/∂z = -D_4/(D_3 - T(e, 1, -T(e, -1, D_1) + T(e, -1, D_2))) * d/D_4
+  d/D_3/∂z̄ = 0
+  d/D_2/∂z = -T(e, 1, -T(e, -1, D_1) + T(e, -1, D_2))/D_2 * d/D_3
+  d/D_2/∂z̄ = 0
+  d/D_1/∂z = -D_2/D_1 * d/D_2
+  d/D_1/∂z̄ = 0
+
+=== byte 5 n_eml=5 x_slot=0 ===
+
+value [before]:
+  -T(e, -1, -T(e, -1, T(e, 2, D_5)) + T(e, 1, -T(e, -1, -T(e, -1, T(e, 2, D_3)) + T(e, 1, -T(e, -1, T(e, 1, D_1)) + T(e, 1, T(e, -1, D_2)))) + T(e, 1, T(e, -1, D_4)))) + T(e, 1, T(e, -1, D_6))
+
+value [after]:
+  D_6 - T(e, -1, -T(e, 1, D_5) + T(e, 1, D_4 - T(e, -1, -T(e, 1, D_3) + T(e, 1, -D_1 + D_2))))
+
+D_gradient:
+  d/D_6/∂z = 1
+  d/D_6/∂z̄ = 0
+  d/D_5/∂z = T(e, 1, D_5)/(-T(e, 1, D_5) + T(e, 1, D_4 - T(e, -1, -T(e, 1, D_3) + T(e, 1, -D_1 + D_2))))
+  d/D_5/∂z̄ = 0
+  d/D_4/∂z = -T(e, 1, D_4 - T(e, -1, -T(e, 1, D_3) + T(e, 1, -D_1 + D_2)))/T(e, 1, D_5) * d/D_5
+  d/D_4/∂z̄ = 0
+  d/D_3/∂z = T(e, 1, D_3)/(-T(e, 1, D_3) + T(e, 1, -D_1 + D_2)) * d/D_4
+  d/D_3/∂z̄ = 0
+  d/D_2/∂z = -T(e, 1, -D_1 + D_2)/T(e, 1, D_3) * d/D_3
+  d/D_2/∂z̄ = 0
+  d/D_1/∂z = -d/D_2
+  d/D_1/∂z̄ = 0
+
+=== byte 6 n_eml=6 x_slot=0 ===
+
+value [before]:
+  -T(e, -1, T(e, 1, D_7)) + T(e, 1, -T(e, -1, -T(e, -1, T(e, 1, D_5)) + T(e, 1, -T(e, -1, -T(e, -1, T(e, 1, D_3)) + T(e, 1, -T(e, -1, D_1) + T(e, 1, T(e, -2, D_2)))) + T(e, 1, T(e, -2, D_4)))) + T(e, 1, T(e, -2, D_6)))
+
+value [after]:
+  -D_7 + T(e, 1, T(e, -1, D_6) - T(e, -1, -D_5 + T(e, 1, T(e, -1, D_4) - T(e, -1, -D_3 + T(e, 1, -T(e, -1, D_1) + T(e, -1, D_2))))))
+
+D_gradient:
+  d/D_7/∂z = -1
+  d/D_7/∂z̄ = 0
+  d/D_6/∂z = -T(e, 1, T(e, -1, D_6) - T(e, -1, -D_5 + T(e, 1, T(e, -1, D_4) - T(e, -1, -D_3 + T(e, 1, -T(e, -1, D_1) + T(e, -1, D_2))))))/D_6 * d/D_7
+  d/D_6/∂z̄ = 0
+  d/D_5/∂z = -D_6/(D_5 - T(e, 1, T(e, -1, D_4) - T(e, -1, -D_3 + T(e, 1, -T(e, -1, D_1) + T(e, -1, D_2))))) * d/D_6
+  d/D_5/∂z̄ = 0
+  d/D_4/∂z = -T(e, 1, T(e, -1, D_4) - T(e, -1, -D_3 + T(e, 1, -T(e, -1, D_1) + T(e, -1, D_2))))/D_4 * d/D_5
+  d/D_4/∂z̄ = 0
+  d/D_3/∂z = -D_4/(D_3 - T(e, 1, -T(e, -1, D_1) + T(e, -1, D_2))) * d/D_4
+  d/D_3/∂z̄ = 0
+  d/D_2/∂z = -T(e, 1, -T(e, -1, D_1) + T(e, -1, D_2))/D_2 * d/D_3
+  d/D_2/∂z̄ = 0
+  d/D_1/∂z = -D_2/D_1 * d/D_2
+  d/D_1/∂z̄ = 0
+
+=== byte 7 n_eml=7 x_slot=0 ===
+
+value [before]:
+  -T(e, -1, -T(e, -1, T(e, 2, D_7)) + T(e, 1, -T(e, -1, -T(e, -1, T(e, 2, D_5)) + T(e, 1, -T(e, -1, -T(e, -1, T(e, 2, D_3)) + T(e, 1, -T(e, -1, T(e, 1, D_1)) + T(e, 1, T(e, -1, D_2)))) + T(e, 1, T(e, -1, D_4)))) + T(e, 1, T(e, -1, D_6)))) + T(e, 1, T(e, -1, D_8))
+
+value [after]:
+  D_8 - T(e, -1, -T(e, 1, D_7) + T(e, 1, D_6 - T(e, -1, -T(e, 1, D_5) + T(e, 1, D_4 - T(e, -1, -T(e, 1, D_3) + T(e, 1, -D_1 + D_2))))))
+
+D_gradient:
+  d/D_8/∂z = 1
+  d/D_8/∂z̄ = 0
+  d/D_7/∂z = T(e, 1, D_7)/(-T(e, 1, D_7) + T(e, 1, D_6 - T(e, -1, -T(e, 1, D_5) + T(e, 1, D_4 - T(e, -1, -T(e, 1, D_3) + T(e, 1, -D_1 + D_2))))))
+  d/D_7/∂z̄ = 0
+  d/D_6/∂z = -T(e, 1, D_6 - T(e, -1, -T(e, 1, D_5) + T(e, 1, D_4 - T(e, -1, -T(e, 1, D_3) + T(e, 1, -D_1 + D_2)))))/T(e, 1, D_7) * d/D_7
+  d/D_6/∂z̄ = 0
+  d/D_5/∂z = T(e, 1, D_5)/(-T(e, 1, D_5) + T(e, 1, D_4 - T(e, -1, -T(e, 1, D_3) + T(e, 1, -D_1 + D_2)))) * d/D_6
+  d/D_5/∂z̄ = 0
+  d/D_4/∂z = -T(e, 1, D_4 - T(e, -1, -T(e, 1, D_3) + T(e, 1, -D_1 + D_2)))/T(e, 1, D_5) * d/D_5
+  d/D_4/∂z̄ = 0
+  d/D_3/∂z = T(e, 1, D_3)/(-T(e, 1, D_3) + T(e, 1, -D_1 + D_2)) * d/D_4
+  d/D_3/∂z̄ = 0
+  d/D_2/∂z = -T(e, 1, -D_1 + D_2)/T(e, 1, D_3) * d/D_3
+  d/D_2/∂z̄ = 0
+  d/D_1/∂z = -d/D_2
+  d/D_1/∂z̄ = 0
+
+=== byte 9 n_eml=1 x_slot=1 ===
+
+value [before]:
+  -T(e, -1, T(e, 1, D_2)) + T(e, 1, T(e, -1, D_1))
+
+value [after]:
+  D_1 - D_2
+
+D_gradient:
+  d/D_2/∂z = -1
+  d/D_2/∂z̄ = 0
+  d/D_1/∂z = -d/D_2
+  d/D_1/∂z̄ = 0
+
+=== byte 10 n_eml=2 x_slot=1 ===
+
+value [before]:
+  -T(e, -1, -T(e, -1, T(e, 2, D_2)) + T(e, 1, D_1)) + T(e, 1, T(e, -1, D_3))
+
+value [after]:
+  D_3 - T(e, -1, T(e, 1, D_1) - T(e, 1, D_2))
+
+D_gradient:
+  d/D_3/∂z = 1
+  d/D_3/∂z̄ = 0
+  d/D_2/∂z = T(e, 1, D_2)/(T(e, 1, D_1) - T(e, 1, D_2))
+  d/D_2/∂z̄ = 0
+  d/D_1/∂z = -T(e, 1, D_1)/T(e, 1, D_2) * d/D_2
+  d/D_1/∂z̄ = 0
+
+=== byte 11 n_eml=3 x_slot=1 ===
+
+value [before]:
+  -T(e, -1, T(e, 1, D_4)) + T(e, 1, -T(e, -1, -T(e, -1, T(e, 1, D_2)) + T(e, 1, T(e, -1, D_1))) + T(e, 1, T(e, -2, D_3)))
+
+value [after]:
+  -D_4 + T(e, 1, T(e, -1, D_3) - T(e, -1, D_1 - D_2))
+
+D_gradient:
+  d/D_4/∂z = -1
+  d/D_4/∂z̄ = 0
+  d/D_3/∂z = -T(e, 1, T(e, -1, D_3) - T(e, -1, D_1 - D_2))/D_3 * d/D_4
+  d/D_3/∂z̄ = 0
+  d/D_2/∂z = D_3/(D_1 - D_2) * d/D_3
+  d/D_2/∂z̄ = 0
+  d/D_1/∂z = -d/D_2
+  d/D_1/∂z̄ = 0
+
+=== byte 12 n_eml=4 x_slot=1 ===
+
+value [before]:
+  -T(e, -1, -T(e, -1, T(e, 2, D_4)) + T(e, 1, -T(e, -1, -T(e, -1, T(e, 2, D_2)) + T(e, 1, D_1)) + T(e, 1, T(e, -1, D_3)))) + T(e, 1, T(e, -1, D_5))
+
+value [after]:
+  D_5 - T(e, -1, -T(e, 1, D_4) + T(e, 1, D_3 - T(e, -1, T(e, 1, D_1) - T(e, 1, D_2))))
+
+D_gradient:
+  d/D_5/∂z = 1
+  d/D_5/∂z̄ = 0
+  d/D_4/∂z = T(e, 1, D_4)/(-T(e, 1, D_4) + T(e, 1, D_3 - T(e, -1, T(e, 1, D_1) - T(e, 1, D_2))))
+  d/D_4/∂z̄ = 0
+  d/D_3/∂z = -T(e, 1, D_3 - T(e, -1, T(e, 1, D_1) - T(e, 1, D_2)))/T(e, 1, D_4) * d/D_4
+  d/D_3/∂z̄ = 0
+  d/D_2/∂z = T(e, 1, D_2)/(T(e, 1, D_1) - T(e, 1, D_2)) * d/D_3
+  d/D_2/∂z̄ = 0
+  d/D_1/∂z = -T(e, 1, D_1)/T(e, 1, D_2) * d/D_2
+  d/D_1/∂z̄ = 0
+
+=== byte 13 n_eml=5 x_slot=1 ===
+
+value [before]:
+  -T(e, -1, T(e, 1, D_6)) + T(e, 1, -T(e, -1, -T(e, -1, T(e, 1, D_4)) + T(e, 1, -T(e, -1, -T(e, -1, T(e, 1, D_2)) + T(e, 1, T(e, -1, D_1))) + T(e, 1, T(e, -2, D_3)))) + T(e, 1, T(e, -2, D_5)))
+
+value [after]:
+  -D_6 + T(e, 1, T(e, -1, D_5) - T(e, -1, -D_4 + T(e, 1, T(e, -1, D_3) - T(e, -1, D_1 - D_2))))
+
+D_gradient:
+  d/D_6/∂z = -1
+  d/D_6/∂z̄ = 0
+  d/D_5/∂z = -T(e, 1, T(e, -1, D_5) - T(e, -1, -D_4 + T(e, 1, T(e, -1, D_3) - T(e, -1, D_1 - D_2))))/D_5 * d/D_6
+  d/D_5/∂z̄ = 0
+  d/D_4/∂z = -D_5/(D_4 - T(e, 1, T(e, -1, D_3) - T(e, -1, D_1 - D_2))) * d/D_5
+  d/D_4/∂z̄ = 0
+  d/D_3/∂z = -T(e, 1, T(e, -1, D_3) - T(e, -1, D_1 - D_2))/D_3 * d/D_4
+  d/D_3/∂z̄ = 0
+  d/D_2/∂z = D_3/(D_1 - D_2) * d/D_3
+  d/D_2/∂z̄ = 0
+  d/D_1/∂z = -d/D_2
+  d/D_1/∂z̄ = 0
+
+=== byte 14 n_eml=6 x_slot=1 ===
+
+value [before]:
+  -T(e, -1, -T(e, -1, T(e, 2, D_6)) + T(e, 1, -T(e, -1, -T(e, -1, T(e, 2, D_4)) + T(e, 1, -T(e, -1, -T(e, -1, T(e, 2, D_2)) + T(e, 1, D_1)) + T(e, 1, T(e, -1, D_3)))) + T(e, 1, T(e, -1, D_5)))) + T(e, 1, T(e, -1, D_7))
+
+value [after]:
+  D_7 - T(e, -1, -T(e, 1, D_6) + T(e, 1, D_5 - T(e, -1, -T(e, 1, D_4) + T(e, 1, D_3 - T(e, -1, T(e, 1, D_1) - T(e, 1, D_2))))))
+
+D_gradient:
+  d/D_7/∂z = 1
+  d/D_7/∂z̄ = 0
+  d/D_6/∂z = T(e, 1, D_6)/(-T(e, 1, D_6) + T(e, 1, D_5 - T(e, -1, -T(e, 1, D_4) + T(e, 1, D_3 - T(e, -1, T(e, 1, D_1) - T(e, 1, D_2))))))
+  d/D_6/∂z̄ = 0
+  d/D_5/∂z = -T(e, 1, D_5 - T(e, -1, -T(e, 1, D_4) + T(e, 1, D_3 - T(e, -1, T(e, 1, D_1) - T(e, 1, D_2)))))/T(e, 1, D_6) * d/D_6
+  d/D_5/∂z̄ = 0
+  d/D_4/∂z = T(e, 1, D_4)/(-T(e, 1, D_4) + T(e, 1, D_3 - T(e, -1, T(e, 1, D_1) - T(e, 1, D_2)))) * d/D_5
+  d/D_4/∂z̄ = 0
+  d/D_3/∂z = -T(e, 1, D_3 - T(e, -1, T(e, 1, D_1) - T(e, 1, D_2)))/T(e, 1, D_4) * d/D_4
+  d/D_3/∂z̄ = 0
+  d/D_2/∂z = T(e, 1, D_2)/(T(e, 1, D_1) - T(e, 1, D_2)) * d/D_3
+  d/D_2/∂z̄ = 0
+  d/D_1/∂z = -T(e, 1, D_1)/T(e, 1, D_2) * d/D_2
+  d/D_1/∂z̄ = 0
+
+=== byte 15 n_eml=7 x_slot=1 ===
+
+value [before]:
+  -T(e, -1, T(e, 1, D_8)) + T(e, 1, -T(e, -1, -T(e, -1, T(e, 1, D_6)) + T(e, 1, -T(e, -1, -T(e, -1, T(e, 1, D_4)) + T(e, 1, -T(e, -1, -T(e, -1, T(e, 1, D_2)) + T(e, 1, T(e, -1, D_1))) + T(e, 1, T(e, -2, D_3)))) + T(e, 1, T(e, -2, D_5)))) + T(e, 1, T(e, -2, D_7)))
+
+value [after]:
+  -D_8 + T(e, 1, T(e, -1, D_7) - T(e, -1, -D_6 + T(e, 1, T(e, -1, D_5) - T(e, -1, -D_4 + T(e, 1, T(e, -1, D_3) - T(e, -1, D_1 - D_2))))))
+
+D_gradient:
+  d/D_8/∂z = -1
+  d/D_8/∂z̄ = 0
+  d/D_7/∂z = -T(e, 1, T(e, -1, D_7) - T(e, -1, -D_6 + T(e, 1, T(e, -1, D_5) - T(e, -1, -D_4 + T(e, 1, T(e, -1, D_3) - T(e, -1, D_1 - D_2))))))/D_7 * d/D_8
+  d/D_7/∂z̄ = 0
+  d/D_6/∂z = -D_7/(D_6 - T(e, 1, T(e, -1, D_5) - T(e, -1, -D_4 + T(e, 1, T(e, -1, D_3) - T(e, -1, D_1 - D_2))))) * d/D_7
+  d/D_6/∂z̄ = 0
+  d/D_5/∂z = -T(e, 1, T(e, -1, D_5) - T(e, -1, -D_4 + T(e, 1, T(e, -1, D_3) - T(e, -1, D_1 - D_2))))/D_5 * d/D_6
+  d/D_5/∂z̄ = 0
+  d/D_4/∂z = -D_5/(D_4 - T(e, 1, T(e, -1, D_3) - T(e, -1, D_1 - D_2))) * d/D_5
+  d/D_4/∂z̄ = 0
+  d/D_3/∂z = -T(e, 1, T(e, -1, D_3) - T(e, -1, D_1 - D_2))/D_3 * d/D_4
+  d/D_3/∂z̄ = 0
+  d/D_2/∂z = D_3/(D_1 - D_2) * d/D_3
+  d/D_2/∂z̄ = 0
+  d/D_1/∂z = -d/D_2
+  d/D_1/∂z̄ = 0
+
