@@ -16,6 +16,39 @@
 
 ---
 
+## 本来打算 vs 实际交付
+
+**原计划（本地跑不动，未完整实现）：**
+
+- **256 个 8-bit node** 全 sweep（`n_eml` × `x_slot` × 高 4 bit `reserved`）
+- **多 node 叠加 / 串联**：用高 nibble 把多棵 eml 树串成更深组合，做 node×node 结构搜索
+- **node × Feynman 全矩阵** + 完整 SCORE 级 benchmark，本地单机内存/时间扛不住（符号化简膨胀、进程被 kill、单次全量 SCORE 数小时）
+
+**仓库里实际有的：**
+
+- 单棵树的 **16 低 nibble sweep**（14 个可 eval，`n_eml=0` 跳过）
+- 高 nibble / **node 叠加** 仅在编码与文档层预留（`codec/node.py`），**无串联求值与训练**
+- 可本地跑通的：`pytest`、smoke SCORE、全量 SCORE（15 targets，约 40 分钟量级，已测）、MLP 列探针
+
+若你看到 `range(256)`、`多 node 串联` 等字样，那是设计草稿，**不是本仓库可复现路径**。
+
+---
+
+## 未完想法（记录即归档）
+
+以下有设计、部分有草稿或局部代码，**没跑通 / 没进主路径**，不再做。
+
+| 方向 | 想法 | 状态 |
+|------|------|------|
+| **Node 叠加嵌套** | 低 nibble 单 node sweep 跑完后，用高 nibble 把多棵 eml 树嵌套组合 | 本地跑不动，**放弃** |
+| **`log1p` / `expm1`** | 数值层用稳定初等函数替代裸 `ln(1+z)`、`exp(z)-1`，减轻小量区梯度病态 | 有想法；`lambdify` 表里有映射，**未全面接入符号化简与训练** |
+| **Logsum 推广** | `T(e, -1, T(e, n, z) + T(e, n, w))` 的稳定求值与合并（gap 阈值、成对 ln-sum） | 部分落在 `symbolic/logsum_gap.py`（SCORE 前修过 overflow），**推广规则与 optimize 管线未做完** |
+| **256 全 sweep** | node×Feynman 全矩阵、叠加搜索 | 见上，**未实现** |
+
+代码里若见到相关 stub 或半完成模块，当作**历史草稿**，不是承诺功能。
+
+---
+
 ## 结论（先说）
 
 **在当前实现与评测下，eML 没有表现出值得继续投入的价值。**

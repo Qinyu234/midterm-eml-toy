@@ -16,6 +16,39 @@ Includes: symbolic pipeline, 16-node sweep, SCORE benchmark, Feynman grad matrix
 
 ---
 
+## Original plan vs what shipped
+
+**Original plan (could not run locally; not fully implemented):**
+
+- Full **256 8-bit node** sweep (`n_eml` × `x_slot` × high-nibble `reserved`)
+- **Multi-node stacking / chaining**: use the high nibble to compose several eml trees into deeper structures; node×node structure search
+- Full **node × Feynman matrix** + SCORE-scale benchmarks — symbolic simplify blow-up, OOM/killed jobs, multi-hour runs on a single machine
+
+**What is actually in the repo:**
+
+- **16 low-nibble** single-tree sweep (14 evaluable; skip `n_eml=0`)
+- High nibble / **node stacking** reserved in encoding and docs (`codec/node.py`) only — **no chained eval or training**
+- Runnable locally: `pytest`, smoke SCORE, full SCORE (15 targets, ~40 min tested), MLP column probe
+
+References to `range(256)` or multi-node chaining in design docs are **draft intent**, not a reproducible path in this repo.
+
+---
+
+## Abandoned ideas (logged, not pursued)
+
+Design notes and partial stubs only — **not finished, not on the main path**.
+
+| Area | Idea | Status |
+|------|------|--------|
+| **Node stacking / nesting** | After single-node sweep, nest multiple eml trees via high nibble | Too heavy locally — **dropped** |
+| **`log1p` / `expm1`** | Stable numerics for small-\|z\| regions instead of raw `ln(1+z)`, `exp(z)-1` | Idea only; names exist in lambdify map — **not wired through simplify + training** |
+| **Logsum generalization** | Stable `T(e, -1, T(e, n, z) + T(e, n, w))` with gap threshold and pair merging | Partial in `symbolic/logsum_gap.py` (overflow fix before SCORE); **full rewrite rules + optimize pipeline unfinished** |
+| **Full 256 sweep** | node×Feynman matrix + stacking search | See above — **not shipped** |
+
+Treat any related stubs as **historical drafts**, not supported features.
+
+---
+
 ## Conclusion (TL;DR)
 
 **Under this implementation and evaluation, eML did not show enough value to keep investing.**
