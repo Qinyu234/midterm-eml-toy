@@ -21,6 +21,10 @@ run; no hidden-size or depth is preselected.
 - Exclude diffusion, flow matching, SNN, zeroth-order optimization, JEPA,
   dynamic tokenization, VQ/latent tokens, MoE, personalization, and data
   augmentation from this phase.
+- Keep input-dependent bilinear mixing as a separate follow-up hypothesis.
+  Its math questions and staged evaluation proposal are recorded in
+  [`operator-mixing-hypothesis.md`](operator-mixing-hypothesis.md); it is not
+  part of the baseline model or its training run.
 
 ## Environment (initial audit)
 
