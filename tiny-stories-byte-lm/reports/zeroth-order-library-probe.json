@@ -1,0 +1,23 @@
+{
+  "library": "torchzero",
+  "version": "0.4.4",
+  "purpose": "API compatibility only; no TinyStories training or optimizer comparison",
+  "results": [
+    {
+      "method": "SPSA",
+      "finite_loss": true,
+      "finite_parameters": true,
+      "parameters_updated": true,
+      "loss": 5.955179214477539,
+      "library_api_compatible": true
+    },
+    {
+      "method": "RDSA",
+      "finite_loss": true,
+      "finite_parameters": true,
+      "parameters_updated": true,
+      "loss": 5.508082389831543,
+      "library_api_compatible": true
+    }
+  ]
+}

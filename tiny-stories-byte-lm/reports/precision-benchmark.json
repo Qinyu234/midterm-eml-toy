@@ -1,0 +1,140 @@
+{
+  "thread_sweep": [
+    {
+      "device": "cpu",
+      "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+      "torch_version": "2.15.0+cpu",
+      "torch_threads": 1,
+      "probe_config": {
+        "d_model": 32,
+        "n_layers": 1,
+        "n_heads": 4,
+        "d_ff": 64,
+        "context_length": 32,
+        "position_encoding": "nope",
+        "lut_seed": 1729,
+        "dropout": 0.0
+      },
+      "batch_size": 4,
+      "sequence_length": 32,
+      "results": [
+        {
+          "dtype": "fp32",
+          "supported": true,
+          "finite_forward_loss_and_gradients": true,
+          "measured_steps": 3,
+          "elapsed_seconds": 0.02987040000152774,
+          "input_bytes_per_second": 12855.535914495958,
+          "last_loss": 5.431246757507324,
+          "last_gradient_norm": 0.8637029280896517,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.float32"
+          }
+        },
+        {
+          "dtype": "fp16",
+          "supported": true,
+          "finite_forward_loss_and_gradients": false,
+          "measured_steps": 3,
+          "elapsed_seconds": 0.11576709998189472,
+          "input_bytes_per_second": 3317.004572629489,
+          "last_loss": NaN,
+          "last_gradient_norm": NaN,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.float16"
+          }
+        },
+        {
+          "dtype": "bf16",
+          "supported": true,
+          "finite_forward_loss_and_gradients": true,
+          "measured_steps": 3,
+          "elapsed_seconds": 0.09899979998590425,
+          "input_bytes_per_second": 3878.7957152910867,
+          "last_loss": 5.4375,
+          "last_gradient_norm": 0.8658279616379755,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.bfloat16"
+          }
+        }
+      ]
+    },
+    {
+      "device": "cpu",
+      "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+      "torch_version": "2.15.0+cpu",
+      "torch_threads": 4,
+      "probe_config": {
+        "d_model": 32,
+        "n_layers": 1,
+        "n_heads": 4,
+        "d_ff": 64,
+        "context_length": 32,
+        "position_encoding": "nope",
+        "lut_seed": 1729,
+        "dropout": 0.0
+      },
+      "batch_size": 4,
+      "sequence_length": 32,
+      "results": [
+        {
+          "dtype": "fp32",
+          "supported": true,
+          "finite_forward_loss_and_gradients": true,
+          "measured_steps": 3,
+          "elapsed_seconds": 0.23488520001410507,
+          "input_bytes_per_second": 1634.841190406805,
+          "last_loss": 5.431246757507324,
+          "last_gradient_norm": 0.8637029147795044,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.float32"
+          }
+        },
+        {
+          "dtype": "fp16",
+          "supported": true,
+          "finite_forward_loss_and_gradients": false,
+          "measured_steps": 3,
+          "elapsed_seconds": 0.18520279999938793,
+          "input_bytes_per_second": 2073.4027779346156,
+          "last_loss": NaN,
+          "last_gradient_norm": NaN,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.float16"
+          }
+        },
+        {
+          "dtype": "bf16",
+          "supported": true,
+          "finite_forward_loss_and_gradients": true,
+          "measured_steps": 3,
+          "elapsed_seconds": 0.18560409999918193,
+          "input_bytes_per_second": 2068.919813741682,
+          "last_loss": 5.4375,
+          "last_gradient_norm": 0.8656433637837767,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.bfloat16"
+          }
+        }
+      ]
+    }
+  ]
+}
