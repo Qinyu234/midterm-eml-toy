@@ -37,6 +37,30 @@ data-loading share: the real training loop ran at 1,440 B/s with batch 8 and at
 Projected wall clock at the measured 2,868 B/s: `64.5e6 / 2868 ≈ 5.4e4 s ≈ 6.2 h`,
 inside the 8-hour bound with margin. Checkpoints every 1,000 steps, eval every 500.
 
+## Moving the data to the second machine
+
+The CPU arm needs only the first 64,522,880 bytes of `train.bin` plus the validation
+split — 69 MiB, not the 1.9 GB corpus. `scripts/pack_cpu_pilot.py` cuts that slice,
+filters the index to stories that fit inside the cut, and emits one archive:
+
+```
+data/cpu-pilot-data.zip          22.1 MB (31% of the 72.3 MB source)
+data/cpu-pilot-data.zip.sha256   418c347baa4cab19cc3808b8b8712f9e52c03c26de116a1983ddd6d5173c651c
+```
+
+Unpack it so `cpu-pilot/` sits under `data/`, then train:
+
+```
+python -m tinystories_byte_lm.train --config configs/cpu-8h.json \
+  --train-data data/cpu-pilot/train.bin --train-index data/cpu-pilot/train.idx \
+  --validation-data data/cpu-pilot/validation.bin --validation-index data/cpu-pilot/validation.idx \
+  --output-dir checkpoints/cpu-8h
+```
+
+Verified on this machine: five steps on the slice, loss 3.67, validation
+byte-perplexity 34.7, 2,866 B/s. The archives are gitignored — they move by file
+transfer, not by `git push`.
+
 ## What counts as a visible result
 
 Reference points, all measured or computed on this machine:

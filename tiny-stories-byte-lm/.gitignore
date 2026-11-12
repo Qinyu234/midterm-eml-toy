@@ -4,5 +4,8 @@ __pycache__/
 *.egg-info/
 data/raw/
 data/processed/
+data/cpu-pilot/
+data/cpu-pilot-data.zip
+data/cpu-pilot-data.zip.sha256
 checkpoints/
 runs/
