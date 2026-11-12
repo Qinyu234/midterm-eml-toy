@@ -67,6 +67,52 @@ uv run python -m tinystories_byte_lm.train --config configs/cpu-8h.json `
 
 Resume with `--resume-from checkpoints/cpu-8h/checkpoint-XXXXXXXX.pt`.
 
+## Thread count, affinity, and priority
+
+Same 3.23M shape, batch 32, ctx 256, fp32, one warmup + 4 timed steps:
+
+| setup | threads | s/step | bytes/s |
+|---|---:|---:|---:|
+| unpinned, normal | 12 | 2.52 | 3,256 |
+| unpinned, normal | 8 | 2.43 | 3,372 |
+| unpinned, normal | 9 | 2.35 | 3,485 |
+| unpinned, normal | 10 | 2.42 | 3,391 |
+| unpinned, **high** | **10** | **2.18** | **3,750** |
+| unpinned, high | 8 | 2.23 | 3,675 |
+| pinned to 6 physical cores | 6 | 3.03 | 2,706 |
+| pinned to 6 physical, high | 6 | 2.82 | 2,904 |
+| pinned to 6 physical, above-normal | 6 | 2.90 | 2,821 |
+| pinned to 4 physical cores | 4 | 4.02 | 2,038 |
+| pinned to 3 physical cores | 3 | 4.72 | 1,735 |
+| pinned to 8 logical (6 physical + 2 SMT) | 8 | 2.68 | 3,059 |
+
+Two conclusions:
+
+1. **Do not pin.** Every affinity mask loses to leaving the scheduler free, because
+   Zen 2 SMT siblings add ~15-20% on this model and a 6-core mask throws them away.
+   Pinning to the 6 physical cores costs 28% versus unpinned 8 threads.
+2. **Raise priority and use 10 threads.** High priority on 10 unpinned threads is the
+   fastest combination measured (3,750 B/s, +11% over 8 threads at normal priority).
+   Both are now config fields: `num_threads`, `process_priority`, `cpu_affinity_mask`
+   (Windows only, applied through `apply_process_tuning`).
+
+Measured in the real training loop (loader included): 2,751 B/s with 10 threads at
+high priority, versus 1,440 B/s at batch 8 / 8 threads. That is the number that
+matters for the 8-hour projection.
+
+## The other machine
+
+The branch carries everything needed: `git fetch origin && git checkout
+add-tinystories-byte-lm`, then `uv sync`, then download the dataset
+(`HF_ENDPOINT=https://hf-mirror.com`, `--connections 8`) and run `prepare_dataset`.
+Configs are committed: `configs/cpu-8h.json` (NoPE) and `configs/cpu-8h-rope.json`
+(RoPE, same shape and recipe, differs only in `position_encoding`).
+
+Only run the RoPE arm on the second machine if its measured throughput differs
+clearly from this one; if the two machines land within a few percent, the RoPE
+comparison is cheaper to run back-to-back on one machine where the throughput
+number is already characterized.
+
 ## Scope caveat
 
 The run consumes 64.5 MB of byte positions sampled from the full training pool; it
