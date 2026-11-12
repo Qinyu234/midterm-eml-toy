@@ -69,3 +69,10 @@ uv run python scripts/probe_zeroth_order_library.py --output reports/zeroth-orde
 
 See [`reports/experiment-report.md`](reports/experiment-report.md) for
 measured CPU precision behavior and remaining data/parameter-budget gates.
+
+## Follow-up architecture research
+
+The input-dependent bilinear mixing proposal is documented separately in
+[`docs/operator-mixing-hypothesis.md`](docs/operator-mixing-hypothesis.md).
+It is a future research track and does not change the current Transformer
+baseline.

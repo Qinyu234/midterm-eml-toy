@@ -96,6 +96,12 @@ extra depth raises attention cost and execution overhead. Keep all four as
 candidates until actual byte count, context-length requirements, and CPU
 throughput are known; these are not approved training configurations.
 
+The more aggressive input-dependent bilinear-mixing idea is documented as a
+separate follow-up in
+[`operator-mixing-hypothesis.md`](../docs/operator-mixing-hypothesis.md). It
+does not replace this standard Transformer baseline or enter its parameter
+comparison.
+
 ## 4. Model and configuration
 
 | Setting | Planned value |
