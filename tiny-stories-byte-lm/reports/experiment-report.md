@@ -59,15 +59,42 @@ of each pinned shard before the UTF-8 byte scan starts.
 Target parameters = clean train input bytes / 20
 ```
 
-| Candidate | d_model | Layers | Heads | Head dim | d_ff | Exact trainable params | RAM / activation estimate | Compute estimate |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Candidate A | Pending byte scan | — | — | — | — | — | — | — |
-| Candidate B | Pending byte scan | — | — | — | — | — | — | — |
-| Candidate C | Pending byte scan | — | — | — | — | — | — | — |
+### Provisional 1 GB sizing scenario
 
-No hidden dimension, layer count, context length, or position encoding is
-preselected. Candidate design and approval are gated on exact training input
-bytes.
+Assumption supplied for this estimate: **1 GB means 1,000,000,000 actual
+UTF-8 next-byte training input positions**, not compressed Parquet size and not
+Unicode characters. The 1:20 target is therefore **50,000,000 trainable
+parameters**. If the intended unit is 1 GiB, the target would be 53,687,091.
+This is a sizing scenario only; the downloaded TinyStories statistics remain
+the source of the final budget.
+
+For the implemented pre-LN blocks (all linear biases and LayerNorm parameters
+counted; fixed LUT excluded), the count is:
+
+```text
+P = L * (4*d^2 + 2*d*d_ff + 9*d + d_ff) + 258*d + 256
+```
+
+Exact counts below were verified against `trainable_parameter_count` in the
+implemented model. Compute assumes context length 256 and one pass over 1B
+bytes; it is an approximate training-FLOP estimate (`6P` per byte plus
+causal-attention QK/AV overhead). The FP32 training-state floor includes
+weights, gradients, and two Adam moments (`16P` bytes), excluding activations,
+temporary buffers, allocator overhead, and the fixed LUT.
+
+| Candidate | d_model | Layers | Heads | Head dim | d_ff | Trainable params | Bytes/param | FP32 weights + Adam state/grad floor | Approx. FLOPs / 1B bytes |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| A — balanced/deeper | 512 | 16 | 8 | 64 | 2,048 | 50,570,496 | 19.77 | 809 MB | 328.6 PFLOP |
+| B — wider/shallower | 640 | 10 | 10 | 64 | 2,560 | 49,400,576 | 20.24 | 790 MB | 316.1 PFLOP |
+| C — wide/shallower | 768 | 7 | 12 | 64 | 3,072 | 49,813,504 | 20.08 | 797 MB | 315.4 PFLOP |
+| D — narrow/deep | 384 | 28 | 6 | 64 | 1,536 | 49,784,320 | 20.09 | 797 MB | 331.7 PFLOP |
+
+All candidates use `d_ff = 4*d_model`, and NoPE/RoPE have the same parameter
+count. Candidate A is a reasonable depth-preserving reference; B is a
+conservative width/depth alternative. C is wider but only seven layers; D's
+extra depth raises attention cost and execution overhead. Keep all four as
+candidates until actual byte count, context-length requirements, and CPU
+throughput are known; these are not approved training configurations.
 
 ## 4. Model and configuration
 

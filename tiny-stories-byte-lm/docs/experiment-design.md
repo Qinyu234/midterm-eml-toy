@@ -93,6 +93,23 @@ The target is computed only after the scan:
 Target trainable parameters = clean training input bytes / 20
 ```
 
+For the provisional 1 GB sizing scenario (1,000,000,000 actual UTF-8
+next-byte input positions), the target is 50,000,000 trainable parameters.
+This is a user-selected scenario, not the measured TinyStories total; the final
+budget must use `data/stats.json`. If "1 GB" means 1 GiB, the corresponding
+target is 53,687,091 parameters.
+
+For the current pre-LN block implementation, with biases enabled and no
+learned position parameters:
+
+```text
+P = n_layers * (4*d_model^2 + 2*d_model*d_ff + 9*d_model + d_ff)
+    + 258*d_model + 256
+```
+
+The fixed LUT is excluded. NoPE and RoPE have identical trainable parameter
+counts in this implementation.
+
 Trainable output, attention, feed-forward, normalization, and any learned
 position-related parameters count toward the budget. The fixed LUT does not.
 The exact model parameter count is to be calculated from each candidate
@@ -101,8 +118,9 @@ configuration, then compared with this target.
 Candidate architectures must include `d_model`, layer/head counts, `head_dim`,
 `d_ff`, exact parameter count, CPU RAM/activation estimate, context length, and
 compute cost. Context length is an explicit design input because full causal
-attention cost and memory depend on it. No architecture candidate is approved
-until the actual byte budget is available.
+attention cost and memory depend on it. Provisional 1 GB candidates are recorded
+in `reports/experiment-report.md`; none is approved until the actual byte
+budget is available.
 
 LUT initialization remains independently configurable. The intended starting
 family is a zero-mean isotropic Gaussian with element standard deviation
