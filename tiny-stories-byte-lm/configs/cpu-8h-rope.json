@@ -1,5 +1,5 @@
 {
-  "purpose": "Same 8-hour CPU recipe with RoPE position encoding, for the RoPE arm only.",
+  "purpose": "RoPE arm for the second machine: identical to configs/cpu-continuous.json except position_encoding=rope.",
   "model": {
     "d_model": 256,
     "n_layers": 4,
@@ -11,17 +11,17 @@
     "dropout": 0.0
   },
   "training": {
-    "steps": 7876,
+    "steps": 15752,
     "batch_size": 32,
     "learning_rate": 0.0006,
-    "warmup_steps": 160,
+    "warmup_steps": 200,
     "lr_schedule": "cosine",
     "min_lr_ratio": 0.1,
     "weight_decay": 0.1,
     "grad_clip": 1.0,
     "eval_interval": 500,
     "eval_batches": 20,
-    "checkpoint_interval": 500,
+    "checkpoint_interval": 250,
     "seed": 2718,
     "precision": "fp32",
     "num_threads": 10,
