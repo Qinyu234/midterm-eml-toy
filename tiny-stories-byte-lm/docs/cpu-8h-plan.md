@@ -27,8 +27,8 @@ data-loading share: the real training loop ran at 1,440 B/s with batch 8 and at
 |---|---|
 | d_model / layers / heads / d_ff | 256 / 4 / 4 / 1,024 (d_model = 16²) |
 | trainable parameters | 3,226,144 |
-| training bytes | 3,226,144 × 20 = 64,522,880 (64.5 MB, 3.4% of the corpus) |
-| steps | 7,876 at batch 32 (8,192 bytes/step) |
+| training bytes | 3,226,144 x 20 = 64,522,880 (61.5 MiB, 3.4% of the corpus) |
+| steps | 7,876 at batch 32 (8,192 bytes/step); there is no wall-clock stop, the step count is the horizon |
 | optimizer | AdamW, β=(0.9, 0.95), eps 1e-8, wd 0.1 on matrices only |
 | lr | 6e-4 peak, 160-step linear warmup, cosine to 0.1× |
 | grad clip | global norm 1.0 |
@@ -90,7 +90,7 @@ Cumulative milestones from the real-loop rate (eval adds ~0.04 h total):
 | 2,000 | 16.4 MB | 0.96 h | 1.07 h |
 | 4,000 | 32.8 MB | 1.91 h | 2.14 h |
 | 6,000 | 49.2 MB | 2.87 h | 3.21 h |
-| 7,876 (full slice) | 64.5 MB | **3.77 h** | **4.22 h** |
+| 7,876 (full 64.5 MB) | 64.5 MB | **3.77 h** | **4.22 h** |
 
 Both arms fit inside the 8-hour budget with ~3.8–4.3 h of slack. An earlier estimate
 of 6.0 h came from a run that shared the machine with concurrent benchmarks; treat
