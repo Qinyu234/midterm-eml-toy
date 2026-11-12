@@ -1,0 +1,77 @@
+{
+  "gemm_gflops": {
+    "256": 174.85373082686223,
+    "512": 211.34985761911227,
+    "576": 223.30331458235162,
+    "768": 175.61295341312675,
+    "1024": 163.75879064944974,
+    "1280": 145.3927295645611,
+    "1536": 151.47429716536055,
+    "1600": 157.22099603618622,
+    "2048": 186.70604965652439,
+    "2304": 179.45929258187815,
+    "3072": 185.3189590814815,
+    "4608": 196.46386869763566,
+    "6912": 203.3359703937981
+  },
+  "batch_size": 32,
+  "context_length": 256,
+  "threads": 10,
+  "calibration_scale": 2.668,
+  "shapes": [
+    {
+      "d_model": 256,
+      "n_layers": 144,
+      "d_ff": 768,
+      "params": 94880512,
+      "tflops_per_step": 3.26,
+      "estimated_seconds_per_step": 18.6,
+      "calibrated_seconds_per_step": 49.62
+    },
+    {
+      "d_model": 576,
+      "n_layers": 29,
+      "d_ff": 1728,
+      "params": 96564352,
+      "tflops_per_step": 2.79,
+      "estimated_seconds_per_step": 15.17,
+      "calibrated_seconds_per_step": 40.47
+    },
+    {
+      "d_model": 1024,
+      "n_layers": 9,
+      "d_ff": 3072,
+      "params": 94746880,
+      "tflops_per_step": 2.55,
+      "estimated_seconds_per_step": 14.61,
+      "calibrated_seconds_per_step": 38.98
+    },
+    {
+      "d_model": 1600,
+      "n_layers": 4,
+      "d_ff": 4800,
+      "params": 102889856,
+      "tflops_per_step": 2.68,
+      "estimated_seconds_per_step": 15.12,
+      "calibrated_seconds_per_step": 40.34
+    },
+    {
+      "d_model": 2304,
+      "n_layers": 2,
+      "d_ff": 6912,
+      "params": 106818304,
+      "tflops_per_step": 2.73,
+      "estimated_seconds_per_step": 14.17,
+      "calibrated_seconds_per_step": 37.8
+    },
+    {
+      "d_model": 1089,
+      "n_layers": 8,
+      "d_ff": 3267,
+      "params": 95259442,
+      "tflops_per_step": 2.55,
+      "estimated_seconds_per_step": 14.6,
+      "calibrated_seconds_per_step": 38.95
+    }
+  ]
+}
