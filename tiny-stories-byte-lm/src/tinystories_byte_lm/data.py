@@ -64,9 +64,19 @@ def write_byte_dataset(
 
 
 class MappedByteStories:
-    """Memory-mapped stories sampled uniformly by eligible next-byte input."""
+    """Memory-mapped stories sampled uniformly by eligible next-byte input.
 
-    def __init__(self, data_path: Path, index_path: Path) -> None:
+    `max_bytes` caps the usable extent of the byte file, so a budgeted run can train
+    on the first slice of a full corpus without producing a second copy of the data.
+    Stories that would cross the cut are dropped, never truncated.
+    """
+
+    def __init__(
+        self,
+        data_path: Path,
+        index_path: Path,
+        max_bytes: int | None = None,
+    ) -> None:
         self._data_file = data_path.open("rb")
         self._index_file = index_path.open("rb")
         index_size = os.fstat(self._index_file.fileno()).st_size
@@ -78,15 +88,25 @@ class MappedByteStories:
         self.cumulative_inputs: array[int] = array("Q")
         total_inputs = 0
         data_size = os.fstat(self._data_file.fileno()).st_size
+        if max_bytes is not None:
+            if max_bytes <= 0:
+                self.close()
+                raise ValueError("max_bytes must be positive")
+            data_size = min(data_size, max_bytes)
+        self.usable_bytes = data_size
+        self.skipped_stories = 0
         for offset, length in INDEX_RECORD.iter_unpack(self._index_file.read()):
             if offset + length > data_size:
+                if max_bytes is not None:
+                    self.skipped_stories += 1
+                    continue
                 self.close()
                 raise ValueError("Story index points outside the byte data file")
             self.offsets.append(offset)
             self.lengths.append(length)
             total_inputs += max(length - 1, 0)
             self.cumulative_inputs.append(total_inputs)
-        if data_size == 0:
+        if data_size == 0 or not self.offsets:
             self.close()
             raise ValueError("Byte data file is empty")
         self._data = mmap.mmap(self._data_file.fileno(), 0, access=mmap.ACCESS_READ)

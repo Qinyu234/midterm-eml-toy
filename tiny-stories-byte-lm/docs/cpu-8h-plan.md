@@ -37,29 +37,38 @@ data-loading share: the real training loop ran at 1,440 B/s with batch 8 and at
 Projected wall clock at the measured 2,868 B/s: `64.5e6 / 2868 ≈ 5.4e4 s ≈ 6.2 h`,
 inside the 8-hour bound with margin. Checkpoints every 1,000 steps, eval every 500.
 
-## Moving the data to the second machine
+## Running on the full corpus with a byte cap
 
-The CPU arm needs only the first 64,522,880 bytes of `train.bin` plus the validation
-split — 69 MiB, not the 1.9 GB corpus. `scripts/pack_cpu_pilot.py` cuts that slice,
-filters the index to stories that fit inside the cut, and emits one archive:
+If the full processed data is on hand, no slicing step is needed. `--train-bytes`
+(and the `training.train_bytes` config field) caps how much of the byte file is usable;
+the loader drops stories that would straddle the cut instead of truncating them.
+
+```
+python -m tinystories_byte_lm.train --config configs/cpu-8h.json \
+  --train-data data/processed/train.bin --train-index data/processed/train.idx \
+  --validation-data data/processed/validation.bin --validation-index data/processed/validation.idx \
+  --output-dir checkpoints/cpu-8h --train-bytes 64522880
+```
+
+`configs/cpu-8h.json` already carries `train_bytes: 64522880` and
+`validation_bytes: 6491512`, so the CLI flags are optional. Verified: the capped view
+of the full corpus gives exactly the same 72,409 stories and 64,449,976 next-byte
+positions as a pre-cut copy, so both routes train identically.
+
+### If the data has to move by hand
+
+The same slice can also be shipped as one archive — useful when the other machine
+cannot download from the mirror. `scripts/pack_cpu_pilot.py` writes:
 
 ```
 data/cpu-pilot-data.zip          22.1 MB (31% of the 72.3 MB source)
 data/cpu-pilot-data.zip.sha256   418c347baa4cab19cc3808b8b8712f9e52c03c26de116a1983ddd6d5173c651c
 ```
 
-Unpack it so `cpu-pilot/` sits under `data/`, then train:
-
-```
-python -m tinystories_byte_lm.train --config configs/cpu-8h.json \
-  --train-data data/cpu-pilot/train.bin --train-index data/cpu-pilot/train.idx \
-  --validation-data data/cpu-pilot/validation.bin --validation-index data/cpu-pilot/validation.idx \
-  --output-dir checkpoints/cpu-8h
-```
-
-Verified on this machine: five steps on the slice, loss 3.67, validation
-byte-perplexity 34.7, 2,866 B/s. The archives are gitignored — they move by file
-transfer, not by `git push`.
+Unpack so `cpu-pilot/` sits under `data/`, then point `--train-data` at
+`data/cpu-pilot/train.bin` and drop the `--train-bytes` flag. Verified with a five
+step run: loss 3.67, validation byte-perplexity 34.7, 2,866 B/s. The archives are
+gitignored — they move by file transfer, not by `git push`.
 
 ## What counts as a visible result
 

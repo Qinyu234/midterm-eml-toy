@@ -26,6 +26,8 @@
     "precision": "fp32",
     "num_threads": 10,
     "process_priority": "high",
-    "cpu_affinity_mask": null
+    "cpu_affinity_mask": null,
+    "train_bytes": 64522880,
+    "validation_bytes": 6491512
   }
 }

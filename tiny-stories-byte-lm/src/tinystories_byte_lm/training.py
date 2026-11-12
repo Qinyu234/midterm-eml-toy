@@ -302,6 +302,8 @@ def run_training(
     validation_index_path: Path,
     output_dir: Path,
     resume_from: Path | None = None,
+    train_max_bytes: int | None = None,
+    validation_max_bytes: int | None = None,
 ) -> list[dict[str, object]]:
     if model_config.context_length <= 0:
         raise ValueError("model context_length must be positive")
@@ -339,6 +341,10 @@ def run_training(
         "optimizer": "AdamW",
         "loss": "next-byte cross entropy",
         "process_tuning": tuning,
+        "data_limits": {
+            "train_max_bytes": train_max_bytes,
+            "validation_max_bytes": validation_max_bytes,
+        },
     }
     start_step = 0
     if resume_from is not None:
@@ -349,8 +355,10 @@ def run_training(
     output_dir.mkdir(parents=True, exist_ok=True)
     metrics_path = output_dir / "metrics.jsonl"
     records: list[dict[str, object]] = []
-    with MappedByteStories(train_data_path, train_index_path) as train_data, MappedByteStories(
-        validation_data_path, validation_index_path
+    with MappedByteStories(
+        train_data_path, train_index_path, max_bytes=train_max_bytes
+    ) as train_data, MappedByteStories(
+        validation_data_path, validation_index_path, max_bytes=validation_max_bytes
     ) as validation_data:
         for step in range(start_step + 1, train_config.steps + 1):
             step_start = time.perf_counter()
