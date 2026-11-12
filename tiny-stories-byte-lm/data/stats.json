@@ -1,0 +1,135 @@
+{
+  "dataset": "roneneldan/TinyStories",
+  "revision": "f54c09fd23315a6f9c86f9dc80f725de7d8f9c64",
+  "data_dir": "C:\\Users\\Public\\WorkPlace\\mid-eml-toy\\tiny-stories-byte-lm\\data\\raw",
+  "encoding": "UTF-8, strict",
+  "cleaning": "Preserve text verbatim; exclude only whitespace-only and invalid UTF-8 rows.",
+  "special_tokens": "None; no BOS/EOS token is added to the 256-byte vocabulary.",
+  "byte_budget_definition": "next_byte_input_bytes counts each clean story's UTF-8 bytes except its final byte, because targets are shifted by one and stories never cross boundaries.",
+  "validation_test_split": "Hash each clean official-validation story with SHA-256; even first digest byte goes to validation, odd goes to test. Exact train overlaps and repeated validation stories are excluded from held-out splits.",
+  "official_train": {
+    "rows": 2119719,
+    "valid_utf8_rows": 2119719,
+    "invalid_utf8_rows": 0,
+    "blank_rows": 230,
+    "clean_rows": 2119489,
+    "valid_source_bytes": 1902941607,
+    "clean_story_bytes": 1902941607,
+    "next_byte_input_bytes": 1900822118,
+    "byte_length_histogram": {
+      "0-127": 18,
+      "1024-2047": 373040,
+      "128-255": 361,
+      "2048+": 55918,
+      "256-511": 79776,
+      "512-1023": 1610376
+    },
+    "format_counts": {
+      "contains_dialogue_quotes": 1155474,
+      "multiline": 2035021,
+      "single_line": 84468
+    },
+    "mean_clean_bytes_per_story": 897.830376567182
+  },
+  "official_validation_before_dedup": {
+    "rows": 21990,
+    "valid_utf8_rows": 21990,
+    "invalid_utf8_rows": 0,
+    "blank_rows": 0,
+    "clean_rows": 21990,
+    "valid_source_bytes": 19218350,
+    "clean_story_bytes": 19218350,
+    "next_byte_input_bytes": 19196360,
+    "byte_length_histogram": {
+      "0-127": 1,
+      "1024-2047": 3461,
+      "128-255": 5,
+      "2048+": 492,
+      "256-511": 881,
+      "512-1023": 17150
+    },
+    "format_counts": {
+      "contains_dialogue_quotes": 11262,
+      "multiline": 20995,
+      "single_line": 995
+    },
+    "mean_clean_bytes_per_story": 873.9586175534333
+  },
+  "train": {
+    "rows": 2119719,
+    "valid_utf8_rows": 2119719,
+    "invalid_utf8_rows": 0,
+    "blank_rows": 230,
+    "clean_rows": 2119489,
+    "valid_source_bytes": 1902941607,
+    "clean_story_bytes": 1902941607,
+    "next_byte_input_bytes": 1900822118,
+    "byte_length_histogram": {
+      "0-127": 18,
+      "1024-2047": 373040,
+      "128-255": 361,
+      "2048+": 55918,
+      "256-511": 79776,
+      "512-1023": 1610376
+    },
+    "format_counts": {
+      "contains_dialogue_quotes": 1155474,
+      "multiline": 2035021,
+      "single_line": 84468
+    },
+    "mean_clean_bytes_per_story": 897.830376567182
+  },
+  "validation": {
+    "rows": 7715,
+    "valid_utf8_rows": 7715,
+    "invalid_utf8_rows": 0,
+    "blank_rows": 0,
+    "clean_rows": 7715,
+    "valid_source_bytes": 6491512,
+    "clean_story_bytes": 6491512,
+    "next_byte_input_bytes": 6483797,
+    "byte_length_histogram": {
+      "0-127": 1,
+      "1024-2047": 990,
+      "128-255": 3,
+      "2048+": 129,
+      "256-511": 311,
+      "512-1023": 6281
+    },
+    "format_counts": {
+      "contains_dialogue_quotes": 3812,
+      "multiline": 7340,
+      "single_line": 375
+    },
+    "mean_clean_bytes_per_story": 841.4143875567078
+  },
+  "test": {
+    "rows": 7674,
+    "valid_utf8_rows": 7674,
+    "invalid_utf8_rows": 0,
+    "blank_rows": 0,
+    "clean_rows": 7674,
+    "valid_source_bytes": 6437959,
+    "clean_story_bytes": 6437959,
+    "next_byte_input_bytes": 6430285,
+    "byte_length_histogram": {
+      "1024-2047": 1072,
+      "128-255": 1,
+      "2048+": 96,
+      "256-511": 340,
+      "512-1023": 6165
+    },
+    "format_counts": {
+      "contains_dialogue_quotes": 3834,
+      "multiline": 7315,
+      "single_line": 359
+    },
+    "mean_clean_bytes_per_story": 838.9313265572061
+  },
+  "heldout_deduplication": {
+    "dropped_exact_train_duplicates": 6601,
+    "dropped_repeated_validation_stories": 0
+  },
+  "target_trainable_parameters": 95041105,
+  "target_parameter_formula": "train.next_byte_input_bytes / 20"
+}

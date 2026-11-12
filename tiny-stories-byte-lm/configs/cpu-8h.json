@@ -1,0 +1,31 @@
+{
+  "purpose": "CPU-only one-pass smoke experiment: 3.23M parameters on a 64.5 MB byte slice, 20 next-byte positions per parameter.",
+  "model": {
+    "d_model": 256,
+    "n_layers": 4,
+    "n_heads": 4,
+    "d_ff": 1024,
+    "context_length": 256,
+    "position_encoding": "nope",
+    "lut_seed": 1729,
+    "dropout": 0.0
+  },
+  "training": {
+    "steps": 7876,
+    "batch_size": 32,
+    "learning_rate": 0.0006,
+    "warmup_steps": 160,
+    "lr_schedule": "cosine",
+    "min_lr_ratio": 0.1,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "eval_interval": 500,
+    "eval_batches": 50,
+    "checkpoint_interval": 1000,
+    "seed": 2718,
+    "precision": "fp32",
+    "num_threads": 10,
+    "process_priority": "high",
+    "cpu_affinity_mask": null
+  }
+}

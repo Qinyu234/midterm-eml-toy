@@ -26,9 +26,18 @@ Parquet shards and official validation Parquet shard in `data/raw/` with the
 resumable downloader, then run:
 
 ```powershell
-uv run python scripts/download_dataset.py --proxy http://localhost:10077
+# Direct huggingface.co is blocked on this host; HF_ENDPOINT selects a mirror.
+$env:HF_ENDPOINT = "https://hf-mirror.com"
+uv run python scripts/download_dataset.py --connections 8
 uv run python scripts/inspect_dataset.py --data-dir data/raw --output data/stats.json
 ```
+
+`--endpoint` overrides `HF_ENDPOINT`, which overrides the default
+`https://huggingface.co`. `--connections 1` keeps the original single resumable
+curl stream; a larger value splits each file into fixed byte ranges fetched
+concurrently, resumes per completed chunk, then assembles and verifies the
+pinned total size. A chunk that stalls below 2 KB/s for 60 s is aborted and
+retried.
 
 The downloader verifies each pinned file size and resumes partial transfers;
 if a transfer is interrupted, rerun the same command. After the download and

@@ -40,6 +40,13 @@ class TrainConfig:
     seed: int
     precision: str = "fp32"
     num_threads: int | None = None
+    warmup_steps: int = 0
+    lr_schedule: str = "constant"
+    min_lr_ratio: float = 0.1
+    weight_decay: float = 0.0
+    grad_clip: float | None = None
+    cpu_affinity_mask: int | None = None
+    process_priority: str = "normal"
 
     def __post_init__(self) -> None:
         if min(
@@ -56,6 +63,61 @@ class TrainConfig:
             raise ValueError("precision must be one of: fp32, fp16, bf16")
         if self.num_threads is not None and self.num_threads <= 0:
             raise ValueError("num_threads must be positive")
+        if self.warmup_steps < 0 or self.warmup_steps > self.steps:
+            raise ValueError("warmup_steps must be in [0, steps]")
+        if self.lr_schedule not in ("constant", "cosine"):
+            raise ValueError("lr_schedule must be 'constant' or 'cosine'")
+        if not 0.0 <= self.min_lr_ratio < 1.0:
+            raise ValueError("min_lr_ratio must be in [0, 1)")
+        if self.weight_decay < 0:
+            raise ValueError("weight_decay must be non-negative")
+        if self.grad_clip is not None and self.grad_clip <= 0:
+            raise ValueError("grad_clip must be positive when set")
+        if self.process_priority not in ("normal", "above_normal", "high"):
+            raise ValueError("process_priority must be normal, above_normal, or high")
+        if self.cpu_affinity_mask is not None and self.cpu_affinity_mask <= 0:
+            raise ValueError("cpu_affinity_mask must be a positive bit mask")
+
+
+def apply_process_tuning(config: TrainConfig) -> dict[str, object]:
+    """Bind CPU threads to a core mask and raise process priority (Windows only)."""
+    applied: dict[str, object] = {"cpu_affinity_mask": None, "process_priority": "normal"}
+    if os.name != "nt":
+        return applied
+    try:
+        import ctypes
+
+        kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        kernel32.OpenProcess.restype = ctypes.c_void_p
+        handle = kernel32.OpenProcess(0x0200 | 0x0400 | 0x0100, False, os.getpid())
+        if not handle:
+            return applied
+        if config.cpu_affinity_mask:
+            if kernel32.SetProcessAffinityMask(
+                ctypes.c_void_p(handle), ctypes.c_size_t(config.cpu_affinity_mask)
+            ):
+                applied["cpu_affinity_mask"] = config.cpu_affinity_mask
+        classes = {"normal": 0x0020, "above_normal": 0x8000, "high": 0x0080}
+        if kernel32.SetPriorityClass(ctypes.c_void_p(handle), classes[config.process_priority]):
+            applied["process_priority"] = config.process_priority
+        kernel32.CloseHandle(ctypes.c_void_p(handle))
+    except (OSError, AttributeError):
+        return applied
+    return applied
+
+
+def scheduled_learning_rate(config: TrainConfig, step: int) -> float:
+    """Linear warmup, then cosine decay to `min_lr_ratio * peak` (or constant)."""
+    if config.warmup_steps and step <= config.warmup_steps:
+        return config.learning_rate * step / config.warmup_steps
+    if config.lr_schedule == "cosine":
+        span = max(1, config.steps - config.warmup_steps)
+        progress = min(1.0, (step - config.warmup_steps) / span)
+        factor = config.min_lr_ratio + (1.0 - config.min_lr_ratio) * 0.5 * (
+            1.0 + math.cos(math.pi * progress)
+        )
+        return config.learning_rate * factor
+    return config.learning_rate
 
 
 def seed_everything(seed: int) -> None:
@@ -78,6 +140,7 @@ def train_step(
     optimizer: torch.optim.Optimizer,
     inputs: Tensor,
     targets: Tensor,
+    grad_clip: float | None = None,
 ) -> StepMetrics:
     model.train()
     optimizer.zero_grad(set_to_none=True)
@@ -95,6 +158,11 @@ def train_step(
         if parameter.grad is not None
     )
     gradient_norm = math.sqrt(squared_norm)
+    if grad_clip is not None and gradient_norm > grad_clip:
+        scale = grad_clip / (gradient_norm + 1e-6)
+        for parameter in model.parameters():
+            if parameter.grad is not None:
+                parameter.grad.mul_(scale)
     optimizer.step()
     return StepMetrics(
         loss=float(loss.detach().float().item()),
@@ -239,6 +307,7 @@ def run_training(
         raise ValueError("model context_length must be positive")
     if train_config.num_threads is not None:
         torch.set_num_threads(train_config.num_threads)
+    tuning = apply_process_tuning(train_config)
     seed_everything(train_config.seed)
     dtype_by_name = {
         "fp32": torch.float32,
@@ -248,9 +317,20 @@ def run_training(
     model = ByteTransformer(model_config).to(
         device="cpu", dtype=dtype_by_name[train_config.precision]
     )
+    decay, no_decay = [], []
+    for parameter in model.parameters():
+        if not parameter.requires_grad:
+            continue
+        # Industry practice: decay matrix weights only; biases and 1-D norms get no weight decay.
+        (decay if parameter.ndim >= 2 else no_decay).append(parameter)
     optimizer = torch.optim.AdamW(
-        (parameter for parameter in model.parameters() if parameter.requires_grad),
+        [
+            {"params": decay, "weight_decay": train_config.weight_decay},
+            {"params": no_decay, "weight_decay": 0.0},
+        ],
         lr=train_config.learning_rate,
+        betas=(0.9, 0.95),
+        eps=1e-8,
     )
     run_config = {
         "model": asdict(model_config),
@@ -258,6 +338,7 @@ def run_training(
         "device": "cpu",
         "optimizer": "AdamW",
         "loss": "next-byte cross entropy",
+        "process_tuning": tuning,
     }
     start_step = 0
     if resume_from is not None:
@@ -278,7 +359,11 @@ def run_training(
                 model_config.context_length,
                 random,
             )
-            metrics = train_step(model, optimizer, inputs, targets)
+            for group in optimizer.param_groups:
+                group["lr"] = scheduled_learning_rate(train_config, step)
+            metrics = train_step(
+                model, optimizer, inputs, targets, grad_clip=train_config.grad_clip
+            )
             elapsed = time.perf_counter() - step_start
             record: dict[str, object] = {
                 "train_loss": metrics.loss,
