@@ -70,6 +70,32 @@ Unpack so `cpu-pilot/` sits under `data/`, then point `--train-data` at
 step run: loss 3.67, validation byte-perplexity 34.7, 2,866 B/s. The archives are
 gitignored — they move by file transfer, not by `git push`.
 
+## Expected wall clock
+
+Measured at this shape (batch 32, ctx 256, fp32, 10 threads, high priority):
+
+| measurement | NoPE | RoPE |
+|---|---:|---:|
+| compute only, s/step | 2.36 | 2.64 (+12%) |
+| compute only, B/s | 3,470 | 3,107 |
+| real training loop, s/step | 2.76 | 3.09 |
+| real training loop, B/s | 2,764 | 2,616 |
+
+Cumulative milestones from the real-loop rate (eval adds ~0.04 h total):
+
+| step | bytes seen | NoPE | RoPE |
+|---:|---:|---:|---:|
+| 1,000 | 8.2 MB | 0.77 h | 0.86 h |
+| 2,000 | 16.4 MB | 1.53 h | 1.72 h |
+| 4,000 | 32.8 MB | 3.07 h | 3.44 h |
+| 6,000 | 49.2 MB | 4.60 h | 5.16 h |
+| 7,876 (full slice) | 64.5 MB | **6.03 h** | **6.75 h** |
+
+Both arms fit inside the 8-hour budget with roughly 1.3–2 h of margin. Plan the
+two arms back to back only if the machine is idle for ~13 h; otherwise run one per
+night. Earlier measurements range 2,751–2,868 B/s, so treat the numbers above as
+±5%.
+
 ## What counts as a visible result
 
 Reference points, all measured or computed on this machine:
