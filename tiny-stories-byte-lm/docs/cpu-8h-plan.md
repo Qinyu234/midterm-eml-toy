@@ -175,8 +175,11 @@ number is already characterized.
 
 ## Scope caveat
 
-The run consumes 64.5 MB of byte positions sampled from the full training pool; it
-does not materialize a separate slice file. So "one pass" means one pass over
-64.5 MB worth of tokens drawn from the 1.9 GB pool, not a single epoch of the whole
-corpus. Anything claimed about the 95M-parameter budget must come from a run with
-`configs/` at that scale, which this machine cannot do in reasonable time.
+The run does not sample from the whole pool. It takes a **prefix cut** of the
+concatenated clean stream, keeping only stories that end inside the first
+64,522,880 bytes: 72,409 stories, 3.4% of the corpus, with no shuffle and no
+length stratification (the exact rule is in
+[`data-selection.md`](data-selection.md)). So "one pass" means one pass over that
+64.5 MB prefix, not an epoch of the whole corpus. Anything claimed about the
+95M-parameter budget must come from a run with a config at that scale, which this
+machine cannot do in reasonable time.
