@@ -1,0 +1,177 @@
+{
+  "checkpoint": "checkpoints\\cpu-cont\\checkpoint-00015752.pt",
+  "step": 15752,
+  "utf8_validity": {
+    "samples": 120,
+    "valid": 120,
+    "rate": 1.0,
+    "wilson95": [
+      0.9689808331071251,
+      0.9999999999999999
+    ],
+    "bytes_per_sample": 400,
+    "temperature": 0.8
+  },
+  "legal_probability_mass": {
+    "mean": 0.9999954759962857,
+    "note": "sum of the model's raw 256-way probability over bytes the decoder accepts"
+  },
+  "validation_word_probability": {
+    "bytes": 6491511,
+    "words": 1266259,
+    "mean_logprob_per_word": -3.6993496537387007,
+    "mean_logprob_per_byte": -0.8097564066401672,
+    "byte_perplexity": 2.2473604779048597,
+    "byte_cross_entropy_nats": 0.8097564066401672,
+    "scope": "entire split"
+  },
+  "validation_loss": {
+    "windows": 6400,
+    "bytes": 1390536,
+    "cross_entropy_nats": 0.8032829592666965,
+    "bits_per_byte": 1.1588923417646741,
+    "accuracy": 0.7454959814057314
+  },
+  "test_loss": {
+    "windows": 6400,
+    "bytes": 1388664,
+    "cross_entropy_nats": 0.8012419695606487,
+    "bits_per_byte": 1.1559478160372538,
+    "accuracy": 0.746037918459757
+  },
+  "test_word_probability": {
+    "bytes": 6437958,
+    "words": 1256522,
+    "mean_logprob_per_word": -3.6931169548206584,
+    "mean_logprob_per_byte": -0.8090855753514787,
+    "byte_perplexity": 2.245853383738798,
+    "byte_cross_entropy_nats": 0.8090855753514787,
+    "scope": "entire split"
+  },
+  "validation_word_frequency": {
+    "total_words": 1266259,
+    "distinct_words": 8785,
+    "hapax_share": 0.23699487763232782,
+    "most_common": [
+      [
+        "the",
+        69448
+      ],
+      [
+        "and",
+        59887
+      ],
+      [
+        "to",
+        44197
+      ],
+      [
+        "a",
+        40201
+      ],
+      [
+        "was",
+        35149
+      ],
+      [
+        "he",
+        27458
+      ],
+      [
+        "she",
+        26787
+      ],
+      [
+        "it",
+        23131
+      ],
+      [
+        "they",
+        19705
+      ],
+      [
+        "her",
+        18082
+      ],
+      [
+        "said",
+        11681
+      ],
+      [
+        "his",
+        11497
+      ],
+      [
+        "in",
+        11287
+      ],
+      [
+        "with",
+        10601
+      ],
+      [
+        "so",
+        10390
+      ],
+      [
+        "that",
+        10263
+      ],
+      [
+        "day",
+        9908
+      ],
+      [
+        "lily",
+        9347
+      ],
+      [
+        "of",
+        9246
+      ],
+      [
+        "you",
+        9012
+      ]
+    ],
+    "words_to_cover_90pct": 916
+  },
+  "generated_from_test": [
+    {
+      "prompt": "\n\nThat night, before bed, Lily picke",
+      "text": "\n\nThat night, before bed, Lily picked up the cactus and held the ball again. They thought it was the little girl and had a lot of fun. She said, \"I'm scared of you, that looks like a lion. It is very pretty.\"\n\nA nurse story: \"I will wait to the park again.\" He held the table ",
+      "valid": true,
+      "mean_legal_mass": 0.999997117370367
+    },
+    {
+      "prompt": "om gave her a jar of candy with a label ",
+      "text": "om gave her a jar of candy with a label to a big tree. She was surprised and started to laugh.\n\nChloe believed that being rude and came out to a roar. It was a pin! It had been a lot of fun that was full of beautiful of bread and veggetable.\n\nShe picked up the car of her hand bes",
+      "valid": true,
+      "mean_legal_mass": 0.9999954183896382
+    },
+    {
+      "prompt": "nside, and waved goodbye to the woman as",
+      "text": "nside, and waved goodbye to the woman as fast as the monkey as passport. But then she started to cry. \n\nShe pouced one and gave her a crystal in the water. Then, a black came and a new friend. They wanted to help the shop made a funny and handed a lot of fun.\n\nThe animal looked t",
+      "valid": true,
+      "mean_legal_mass": 0.9999980894227822
+    },
+    {
+      "prompt": " It was a beautiful",
+      "text": " It was a beautiful flower and the frog to get back and back together. They were happy again.\n\nWhen they got home, the people in singing, they went to the forest and the people. They were so happy that it was time to go home. The shopkeeper saw Lily and Ben a",
+      "valid": true,
+      "mean_legal_mass": 0.999997416883707
+    },
+    {
+      "prompt": "my spoon?\" His mom did not know, so she ",
+      "text": "my spoon?\" His mom did not know, so she missed him.\n\nHis mom sees the doctor is tasty. She grabs Lily and climbs. She says, \"Lily, you are not making my color. You miss a uncomforted. But you have to stop stir and say something wrong. Then you can see what you is dry or all of yo",
+      "valid": true,
+      "mean_legal_mass": 0.9999973617494107
+    },
+    {
+      "prompt": " It was their regular",
+      "text": " It was their regular would and start their drums. It was a fast! Everyone was enjoying their way they found the noisy was their joy. \n\nTheir friends were always not a tiger twigle back and everyone was happy. They shared it still the seal and fallen on the flo",
+      "valid": true,
+      "mean_legal_mass": 0.9999933242797852
+    }
+  ]
+}
