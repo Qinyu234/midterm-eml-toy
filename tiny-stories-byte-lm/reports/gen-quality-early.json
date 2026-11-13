@@ -1,0 +1,43 @@
+[
+  {
+    "checkpoint": "checkpoints\\cpu-cont\\checkpoint-00000250.pt",
+    "step": 250,
+    "temperature": 0.8,
+    "invalid_utf8_samples": 1,
+    "sample_count": 3,
+    "invalid_utf8_rate": 0.3333333333333333,
+    "illegal_byte_share": 0.0008038585209003215,
+    "illegal_bytes": 1,
+    "bytes_generated": 1244,
+    "words": 237,
+    "words_outside_corpus": 137,
+    "oov_word_rate": 0.5780590717299579,
+    "oov_examples": [
+      "nnlas",
+      "tome",
+      "watid",
+      "orr",
+      "toutome",
+      "ltat",
+      "frim",
+      "fls",
+      "sougare",
+      "fecke",
+      "wapl",
+      "fo",
+      "kikelis",
+      "hend",
+      "wa",
+      "rthe",
+      "inigeng",
+      "theasoprout",
+      "waicks",
+      "lis"
+    ],
+    "samples": [
+      "Once upon a time nnlas sand bin tome watid orr. Toutome an. They ltat frim fls.\n\n\" sougare awake fecke a wapl fo the kikelis. Hend wa rthe ad thin inigeng nd s. Theasoprout he waicks, Lis wile he t wad in angex southe acings hind hed co ped thin so pak.\n\n\n\"Ond hed totoomay the tlid whithen be ly ftinghand weded his ty itow go stheeetis s awas touche s pr cup and watathathee fonghin the the was the thend ouir ngis",
+      "The little dog rock beathed tat they, cryewo fre bing omase! Lil wand pemery wan, thas pind \"\ufffdind fonghed wigaled waly k torennther gang telisthe buplly the to he o asod hished sas pat hin ithicke rethe. \n\n\"Ligmemye way d feren apid sored bike, w thispingerd heathe t be. Shirand Theppy fid bethimawe wmime by buan. Thid, ched by wincllthis agas ang. He bey thetho, s warend the was s icit rende shibocape. \n\n\n\n\nTh",
+      "Lily wanted to aland iled and todeay wa e ngo cofo t wawnd thenther, t icascorinthe s tow hee t ouitile per ye mailinds reng ande andewinle thisas alte, as s mailfor whitbe me. Shed t ind keantotif ye wangs tithed he whe herin sasthe thange len Buce fthanng sond llonghlllothe he f win in and palind bothing f g tr, pimowato orler wan ilete toyo wamed wang oul d and bie.\n\n\nAn't tas s ge wolindend thatand the id p"
+    ]
+  }
+]

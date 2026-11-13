@@ -1,0 +1,31 @@
+{
+  "purpose": "Throughput log for the 95M-budget candidate d_model=1024, layers=9, d_ff=3072.",
+  "model": {
+    "d_model": 1024,
+    "n_layers": 9,
+    "n_heads": 16,
+    "d_ff": 3072,
+    "context_length": 256,
+    "position_encoding": "nope",
+    "lut_seed": 1729,
+    "dropout": 0.0
+  },
+  "training": {
+    "steps": 20,
+    "batch_size": 32,
+    "learning_rate": 0.0006,
+    "warmup_steps": 5,
+    "lr_schedule": "cosine",
+    "min_lr_ratio": 0.1,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "eval_interval": 20,
+    "eval_batches": 4,
+    "checkpoint_interval": 20,
+    "seed": 2718,
+    "precision": "fp32",
+    "num_threads": 10,
+    "process_priority": "high",
+    "cpu_affinity_mask": null
+  }
+}

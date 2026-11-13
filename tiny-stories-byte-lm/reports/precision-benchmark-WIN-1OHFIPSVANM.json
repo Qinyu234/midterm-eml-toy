@@ -1,0 +1,460 @@
+{
+  "host": "WIN-1OHFIPSVANM",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "cpu": "AMD Ryzen 5 5500U with Radeon Graphics",
+  "logical_cpus": 12,
+  "total_memory_bytes": 16468996096,
+  "torch_version": "2.15.0+cpu",
+  "precision_sweep": [
+    {
+      "device": "cpu",
+      "cpu": "AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD",
+      "torch_version": "2.15.0+cpu",
+      "torch_threads": 1,
+      "probe_config": {
+        "d_model": 32,
+        "n_layers": 1,
+        "n_heads": 4,
+        "d_ff": 64,
+        "context_length": 32,
+        "position_encoding": "nope",
+        "lut_seed": 1729,
+        "dropout": 0.0
+      },
+      "batch_size": 4,
+      "sequence_length": 32,
+      "results": [
+        {
+          "dtype": "fp32",
+          "supported": true,
+          "finite_forward_loss_and_gradients": true,
+          "measured_steps": 10,
+          "elapsed_seconds": 0.05516699998406693,
+          "input_bytes_per_second": 23202.276730104655,
+          "last_loss": 4.807254791259766,
+          "last_gradient_norm": 0.7876442716151338,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.float32"
+          }
+        },
+        {
+          "dtype": "fp16",
+          "supported": true,
+          "finite_forward_loss_and_gradients": false,
+          "measured_steps": 10,
+          "elapsed_seconds": 0.22238520003156736,
+          "input_bytes_per_second": 5755.778711075671,
+          "last_loss": NaN,
+          "last_gradient_norm": NaN,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.float16"
+          }
+        },
+        {
+          "dtype": "bf16",
+          "supported": true,
+          "finite_forward_loss_and_gradients": true,
+          "measured_steps": 10,
+          "elapsed_seconds": 0.20235389994923025,
+          "input_bytes_per_second": 6325.551424119558,
+          "last_loss": 4.8125,
+          "last_gradient_norm": 0.7848232454250234,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.bfloat16"
+          }
+        }
+      ]
+    },
+    {
+      "device": "cpu",
+      "cpu": "AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD",
+      "torch_version": "2.15.0+cpu",
+      "torch_threads": 2,
+      "probe_config": {
+        "d_model": 32,
+        "n_layers": 1,
+        "n_heads": 4,
+        "d_ff": 64,
+        "context_length": 32,
+        "position_encoding": "nope",
+        "lut_seed": 1729,
+        "dropout": 0.0
+      },
+      "batch_size": 4,
+      "sequence_length": 32,
+      "results": [
+        {
+          "dtype": "fp32",
+          "supported": true,
+          "finite_forward_loss_and_gradients": true,
+          "measured_steps": 10,
+          "elapsed_seconds": 0.05465810000896454,
+          "input_bytes_per_second": 23418.303962085505,
+          "last_loss": 4.807254791259766,
+          "last_gradient_norm": 0.7876442915868657,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.float32"
+          }
+        },
+        {
+          "dtype": "fp16",
+          "supported": true,
+          "finite_forward_loss_and_gradients": false,
+          "measured_steps": 10,
+          "elapsed_seconds": 0.18114400003105402,
+          "input_bytes_per_second": 7066.201473858179,
+          "last_loss": NaN,
+          "last_gradient_norm": NaN,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.float16"
+          }
+        },
+        {
+          "dtype": "bf16",
+          "supported": true,
+          "finite_forward_loss_and_gradients": true,
+          "measured_steps": 10,
+          "elapsed_seconds": 0.1687592000234872,
+          "input_bytes_per_second": 7584.771673614564,
+          "last_loss": 4.8125,
+          "last_gradient_norm": 0.7848979854870319,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.bfloat16"
+          }
+        }
+      ]
+    },
+    {
+      "device": "cpu",
+      "cpu": "AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD",
+      "torch_version": "2.15.0+cpu",
+      "torch_threads": 4,
+      "probe_config": {
+        "d_model": 32,
+        "n_layers": 1,
+        "n_heads": 4,
+        "d_ff": 64,
+        "context_length": 32,
+        "position_encoding": "nope",
+        "lut_seed": 1729,
+        "dropout": 0.0
+      },
+      "batch_size": 4,
+      "sequence_length": 32,
+      "results": [
+        {
+          "dtype": "fp32",
+          "supported": true,
+          "finite_forward_loss_and_gradients": true,
+          "measured_steps": 10,
+          "elapsed_seconds": 0.05667459999676794,
+          "input_bytes_per_second": 22585.0733851319,
+          "last_loss": 4.807254314422607,
+          "last_gradient_norm": 0.7876442953927645,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.float32"
+          }
+        },
+        {
+          "dtype": "fp16",
+          "supported": true,
+          "finite_forward_loss_and_gradients": false,
+          "measured_steps": 10,
+          "elapsed_seconds": 0.17715750000206754,
+          "input_bytes_per_second": 7225.209206412721,
+          "last_loss": NaN,
+          "last_gradient_norm": NaN,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.float16"
+          }
+        },
+        {
+          "dtype": "bf16",
+          "supported": true,
+          "finite_forward_loss_and_gradients": true,
+          "measured_steps": 10,
+          "elapsed_seconds": 0.15413050004281104,
+          "input_bytes_per_second": 8304.650926613936,
+          "last_loss": 4.8125,
+          "last_gradient_norm": 0.7849742787102835,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.bfloat16"
+          }
+        }
+      ]
+    },
+    {
+      "device": "cpu",
+      "cpu": "AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD",
+      "torch_version": "2.15.0+cpu",
+      "torch_threads": 8,
+      "probe_config": {
+        "d_model": 32,
+        "n_layers": 1,
+        "n_heads": 4,
+        "d_ff": 64,
+        "context_length": 32,
+        "position_encoding": "nope",
+        "lut_seed": 1729,
+        "dropout": 0.0
+      },
+      "batch_size": 4,
+      "sequence_length": 32,
+      "results": [
+        {
+          "dtype": "fp32",
+          "supported": true,
+          "finite_forward_loss_and_gradients": true,
+          "measured_steps": 10,
+          "elapsed_seconds": 0.06489819998387247,
+          "input_bytes_per_second": 19723.197258446096,
+          "last_loss": 4.807254791259766,
+          "last_gradient_norm": 0.7876442901457971,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.float32"
+          }
+        },
+        {
+          "dtype": "fp16",
+          "supported": true,
+          "finite_forward_loss_and_gradients": false,
+          "measured_steps": 10,
+          "elapsed_seconds": 0.16390769998542964,
+          "input_bytes_per_second": 7809.273146495155,
+          "last_loss": NaN,
+          "last_gradient_norm": NaN,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.float16"
+          }
+        },
+        {
+          "dtype": "bf16",
+          "supported": true,
+          "finite_forward_loss_and_gradients": true,
+          "measured_steps": 10,
+          "elapsed_seconds": 0.1584417000412941,
+          "input_bytes_per_second": 8078.681304646429,
+          "last_loss": 4.8125,
+          "last_gradient_norm": 0.7848703570555412,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.bfloat16"
+          }
+        }
+      ]
+    },
+    {
+      "device": "cpu",
+      "cpu": "AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD",
+      "torch_version": "2.15.0+cpu",
+      "torch_threads": 12,
+      "probe_config": {
+        "d_model": 32,
+        "n_layers": 1,
+        "n_heads": 4,
+        "d_ff": 64,
+        "context_length": 32,
+        "position_encoding": "nope",
+        "lut_seed": 1729,
+        "dropout": 0.0
+      },
+      "batch_size": 4,
+      "sequence_length": 32,
+      "results": [
+        {
+          "dtype": "fp32",
+          "supported": true,
+          "finite_forward_loss_and_gradients": true,
+          "measured_steps": 10,
+          "elapsed_seconds": 0.07893229997716844,
+          "input_bytes_per_second": 16216.428513678764,
+          "last_loss": 4.807254791259766,
+          "last_gradient_norm": 0.7876442877809667,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.float32"
+          }
+        },
+        {
+          "dtype": "fp16",
+          "supported": true,
+          "finite_forward_loss_and_gradients": false,
+          "measured_steps": 10,
+          "elapsed_seconds": 0.18273020000196993,
+          "input_bytes_per_second": 7004.862907095821,
+          "last_loss": NaN,
+          "last_gradient_norm": NaN,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.float16"
+          }
+        },
+        {
+          "dtype": "bf16",
+          "supported": true,
+          "finite_forward_loss_and_gradients": true,
+          "measured_steps": 10,
+          "elapsed_seconds": 0.17149440001230687,
+          "input_bytes_per_second": 7463.800566713222,
+          "last_loss": 4.8125,
+          "last_gradient_norm": 0.7847901759797993,
+          "telu": {
+            "supported": true,
+            "finite_forward": true,
+            "finite_backward": true,
+            "output_dtype": "torch.bfloat16"
+          }
+        }
+      ]
+    }
+  ],
+  "reference_shape": {
+    "d_model": 384,
+    "n_layers": 8,
+    "n_heads": 6,
+    "d_ff": 1536,
+    "context_length": 256,
+    "lut_seed": 1729
+  },
+  "throughput": [
+    {
+      "threads": 1,
+      "table": {
+        "d_model": 384,
+        "n_layers": 8,
+        "n_heads": 6,
+        "d_ff": 1536,
+        "context_length": 256,
+        "lut_seed": 1729
+      },
+      "trainable_parameters": 14295040,
+      "batch_size": 8,
+      "sequence_length": 256,
+      "measured_steps": 3,
+      "elapsed_seconds": 15.178498599969316,
+      "seconds_per_step": 5.059499533323105,
+      "input_bytes_per_second": 404.7831186684314,
+      "peak_process_memory_bytes": 1121767424,
+      "last_loss": 5.659163951873779
+    },
+    {
+      "threads": 2,
+      "table": {
+        "d_model": 384,
+        "n_layers": 8,
+        "n_heads": 6,
+        "d_ff": 1536,
+        "context_length": 256,
+        "lut_seed": 1729
+      },
+      "trainable_parameters": 14295040,
+      "batch_size": 8,
+      "sequence_length": 256,
+      "measured_steps": 3,
+      "elapsed_seconds": 10.089424700010568,
+      "seconds_per_step": 3.363141566670189,
+      "input_bytes_per_second": 608.9544431600311,
+      "peak_process_memory_bytes": 1144954880,
+      "last_loss": 5.659163951873779
+    },
+    {
+      "threads": 4,
+      "table": {
+        "d_model": 384,
+        "n_layers": 8,
+        "n_heads": 6,
+        "d_ff": 1536,
+        "context_length": 256,
+        "lut_seed": 1729
+      },
+      "trainable_parameters": 14295040,
+      "batch_size": 8,
+      "sequence_length": 256,
+      "measured_steps": 3,
+      "elapsed_seconds": 7.7838555999915116,
+      "seconds_per_step": 2.594618533330504,
+      "input_bytes_per_second": 789.3260507050902,
+      "peak_process_memory_bytes": 1144954880,
+      "last_loss": 5.659163951873779
+    },
+    {
+      "threads": 8,
+      "table": {
+        "d_model": 384,
+        "n_layers": 8,
+        "n_heads": 6,
+        "d_ff": 1536,
+        "context_length": 256,
+        "lut_seed": 1729
+      },
+      "trainable_parameters": 14295040,
+      "batch_size": 8,
+      "sequence_length": 256,
+      "measured_steps": 3,
+      "elapsed_seconds": 6.421064699999988,
+      "seconds_per_step": 2.140354899999996,
+      "input_bytes_per_second": 956.8506606077356,
+      "peak_process_memory_bytes": 1156759552,
+      "last_loss": 5.659163951873779
+    },
+    {
+      "threads": 12,
+      "table": {
+        "d_model": 384,
+        "n_layers": 8,
+        "n_heads": 6,
+        "d_ff": 1536,
+        "context_length": 256,
+        "lut_seed": 1729
+      },
+      "trainable_parameters": 14295040,
+      "batch_size": 8,
+      "sequence_length": 256,
+      "measured_steps": 3,
+      "elapsed_seconds": 7.367367200029548,
+      "seconds_per_step": 2.455789066676516,
+      "input_bytes_per_second": 833.9478450287313,
+      "peak_process_memory_bytes": 1187893248,
+      "last_loss": 5.659163951873779
+    }
+  ]
+}

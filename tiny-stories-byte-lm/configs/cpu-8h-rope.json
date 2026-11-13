@@ -1,0 +1,33 @@
+{
+  "purpose": "RoPE arm for the second machine: identical to configs/cpu-continuous.json except position_encoding=rope.",
+  "model": {
+    "d_model": 256,
+    "n_layers": 4,
+    "n_heads": 4,
+    "d_ff": 1024,
+    "context_length": 256,
+    "position_encoding": "rope",
+    "lut_seed": 1729,
+    "dropout": 0.0
+  },
+  "training": {
+    "steps": 15752,
+    "batch_size": 32,
+    "learning_rate": 0.0006,
+    "warmup_steps": 200,
+    "lr_schedule": "cosine",
+    "min_lr_ratio": 0.1,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "eval_interval": 500,
+    "eval_batches": 20,
+    "checkpoint_interval": 250,
+    "seed": 2718,
+    "precision": "fp32",
+    "num_threads": 10,
+    "process_priority": "high",
+    "cpu_affinity_mask": null,
+    "train_bytes": 64522880,
+    "validation_bytes": 6491512
+  }
+}
